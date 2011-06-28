@@ -1,0 +1,22 @@
+{
+"update_url":"http://clients2.google.com/service/update2/crx",
+    "name": "Emacs mode",
+    "version": "0.2",
+    "description": "Emacs bindings and quick navigation with only keyboard shortcuts.",
+    "icons": {"128": "icon128.png"},
+    "browser_action": {
+        "default_icon": "emacs.png",
+        "default_title": "Emacs mode"
+    },
+    "background_page": "background.html",
+    "permissions": ["tabs",
+        "experimental", "clipboard"
+    ],
+    "content_scripts": [{
+        "matches": ["<all_urls>"],
+        "css": ["style.css"],
+        "js": ["script.js"],
+        "run_at": "document_start",
+        "all_frames": true
+    }]
+}
