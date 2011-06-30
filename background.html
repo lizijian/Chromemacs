@@ -85,7 +85,7 @@
             }
             break;
         case "PASTE":
-            if (!request.textObjName) break;
+            if (!request.textObjId) break;
             var cbc = document.getElementById('clipBoardCache');
             cbc.value = "";
             cbc.focus();
@@ -96,9 +96,9 @@
             manifest.json please, otherwise this extension couldn't be distributed.*/
             rv = document.execCommand("paste", false,null);
             console.log("returen value = " + rv);
-            //callback({'textObjName': request.textObjName, 'text': cbc.value});
+            //callback({'textObjId': request.textObjId, 'text': cbc.value});
             /*chrome.experimental.clipboard.executePaste(sender.tab.id);*/
-            callback({'textObjName': request.textObjName, 'text': cbc.value});
+            callback({'textObjId': request.textObjId, 'text': cbc.value});
             return;
             }
         if (callback instanceof Function) callback({});

@@ -262,11 +262,11 @@ var keydownevent = function(e) {
                                 case "SELECT":
                                 // case "BUTTON":
                                 return;
+                                case "INPUT":
+                                    /*input += '(INPUT)';
+                                    break;*/
                                 case "TEXTAREA":
                                     input += '(EDIT)';
-                                    break;
-                                case "INPUT":
-                                    input += '(INPUT)';
                                     break;
                         }
                 }
@@ -313,6 +313,7 @@ var keydownevent = function(e) {
         else
             shortcut = editShortcuts;
 
+        var rc = 0;
         inSeq.push(input);
         log(inSeq.join(" "));
         for (var i = 0; i < inSeq.length; ++i) 
@@ -321,7 +322,7 @@ var keydownevent = function(e) {
                 if (shortcut['f']) {
                         // sequence match
                         resetConsole();
-                        shortcut['f'](e);
+                        rc = shortcut['f'](e);
                 }
             } else {
                 // invalid sequence
@@ -329,7 +330,7 @@ var keydownevent = function(e) {
                 resetConsole(1);
             }
         // stop events
-        if (e.preventDefault) e.preventDefault();
+        if (!rc && e.preventDefault) e.preventDefault();
 }
 window.addEventListener('keydown', keydownevent, true);
 /*document.addEventListener("keydown", keydownevent, false);*/
@@ -670,16 +671,16 @@ var cmdCopy = function(e) {
 }
 
 var cmdPaste = function(e) {
-    var tBox = document.getElementById(e.target.name);
-    console.log("paste event log: " + e);
+    /*var tBox = document.getElementById(e.target.name);
+    console.log("paste event log: " + e);*/
     /*document.execCommand('paste', false, null);*/
     chrome.extension.sendRequest(
         {
             'action': "PASTE",
-            'textObjName': e.target.name,
+            'textObjId': e.target.id,
         }, 
         function (res){
-            var tBox = document.getElementById(res.textObjName);
+            var tBox = document.getElementById(res.textObjId);
             var text = tBox.value.substring(0, tBox.selectionStart);
             text += res.text;
             var pos = text.length;
@@ -696,7 +697,7 @@ var cmdPaste = function(e) {
 
 var cmdCut = function(e) {
     cmdCopy(e);
-    var tBox = document.getElementById(e.target.name);
+    var tBox = document.getElementById(e.target.id);
     var text = tBox.value.substring(0, tBox.selectionStart);
     var pos = text.length;
     text += tBox.value.substring(tBox.selectionEnd, tBox.value.length);
@@ -721,7 +722,8 @@ var findLineOffset = function(tb){
 
 var saveOffset = 0;
 var editMove = function(e, offset) {
-    var tBox = document.getElementById(e.target.name);
+    var tBox = document.getElementById(e.target.id);
+    /*if (!tBox) return (-1);*/
     var start = tBox.selectionStart;
     var end = tBox.selectionEnd;
     switch (offset) {
@@ -734,20 +736,28 @@ var editMove = function(e, offset) {
             end =start;
             break;
         case "-n":
-            for (var i = start - 1; i >= 0; --i)
+            for (var i = start - 1; i > 0; --i)
                 if (tBox.value[i].charCodeAt() == 10){
                     start = i+1;
                     end = i+1;
                     break;
                 }
+            if (!i){
+                start = 0;
+                end = 0;
+            }
             break;
         case "n":
-            for (var i = start; i <= tBox.value.length; ++i)
+            for (var i = start; i < tBox.value.length; ++i)
                 if (tBox.value[i].charCodeAt() == 10){
                     start = i;
                     end = i;
                     break;
                 }
+            if (i == tBox.value.length){
+                start = tBox.value.length;
+                end = tBox.value.length;
+            }
             break;
         case "u":
             var off = findLineOffset(tBox)
