@@ -2,7 +2,7 @@
                                     LICENCE
 	Copyright (c) 2011 Theis Mackeprang (http://www.5p.dk/)
     Copyright (c) 2011 FLorian Mounier (http://paradoxxxzero.tk/)
-	Copyright (c) 2011 Jet Lee (ijetlee@gmail.com)
+	Copyright (c) 2011 Jet Lee (ijetlee@163.com)
 
 	Permission is hereby granted, free of charge, to any person obtaining a copy
 	of this software and associated documentation files (the "Software"), to deal
@@ -29,9 +29,9 @@ essential change. Please refer to :
     https://chrome.google.com/webstore/detail/miojjimhedbpnnjpneobbfhdicckhhkd?hl=en_US
     https://github.com/5p/Emacs-mode
 
-And my purpose is that I need a Firemacs like bindings on chrome, because I am 
+And my purpose is that I need a Firemacs like key bindings on chrome, because I am 
 accustomed to options of Firemacs.
 
 This is my 1st time to write a chrome extension, a web application, a java script.
 I don't familiar with JS/CSS/WEB before.So if you have some great ideas or suggests
-about this extension, please feel free to send me a email.
+about this extension, please feel free to send email to me.
