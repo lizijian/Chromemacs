@@ -44,8 +44,6 @@ var shortcuts = {
         'CTRL-ALT-R': {'h': 'Reverse regexp I-search links', 'f': function(e) { searchLinks(e, 1) } },
         'CTRL-J': {'h': 'Jump to link or form control', 'f': function(e) { jumpTo(e) } },
         // native functions
-        'BACKSPACE': {'h': 'Previous page in history', 'f': function(e) { log("Hmm.. How did you get here?") } },
-        //'CTRL-T': {'h': 'New tab', 'f': function(e) { chrome.extension.sendRequest({'action':'NEW_TAB'}) } },
         'ESC': {'h': 'Remove focus from link or form control', 'f': function(e) { log("Hmm.. How did you get here?") } },
         'CTRL-X': {
                 'CTRL-C': {'h': 'Close all windows', 'f': function(e) { chrome.extension.sendRequest({'action':'CLOSE_ALL_WINDOWS'}) } },
@@ -55,60 +53,63 @@ var shortcuts = {
                         '2': {'h': 'New window', 'f': function(e) { chrome.extension.sendRequest({'action':'NEW_WINDOW'}, function(r){}) } }
                 }
         },
-        /* Scrolling in X */
-        // small scrolling
-        'N': {'h': 'Scroll down 10%', 'f': function(e) { scroll(10, 0) } },
-        'CTRL-M': {'f': function(e) { scroll(10, 0) } },
-        'P': {'h': 'Scroll up 10%', 'f': function(e) { scroll(-10, 0) } },
-        'CTRL-P': {'f': function(e) { scroll(-10, 0) } },
-        'J': {'h': 'Scroll down 10%', 'f': function(e) { scroll(10, 0) } },
-        'K': {'h': 'Scroll up 10%', 'f': function(e) { scroll(-10, 0) } },
-        //add by Jet , scroll up/down, just like firemacs
-        'CTRL-P': {'h': 'Scroll up 10%', 'f': function(e) { scroll(-10, 0) } },
-        'CTRL-M': {'h': 'Scroll down 10%', 'f': function(e) { scroll(10, 0) } },
+        /*switch tab to left/right*/
         //add by Jet , move to left/right tab just like firemacs
-        'CTRL-F': {'h': 'Switch to left tab.', 'f': function(e) { chrome.extension.sendRequest({'action':'SWITCHTAB', 'offset': '-1'}); } },
-        'CTRL-B': {'h': 'Switch to right tab.', 'f': function(e) { chrome.extension.sendRequest({'action':'SWITCHTAB', 'offset': '1'}); } },
+        'CTRL-B': {'h': 'Switch to left tab.', 'f': function(e) { chrome.extension.sendRequest({'action':'SWITCHTAB', 'offset': '-1'}); } },
+        'CTRL-F': {'h': 'Switch to right tab.', 'f': function(e) { chrome.extension.sendRequest({'action':'SWITCHTAB', 'offset': '1'}); } },
         //add by Jet , move to left/right tab just like firemacs
         'H': {'h': 'Switch to left tab.', 'f': function(e) { chrome.extension.sendRequest({'action':'SWITCHTAB', 'offset': '-1'}); } },
         'L': {'h': 'Switch to right tab.', 'f': function(e) { chrome.extension.sendRequest({'action':'SWITCHTAB', 'offset': '1'}); } },
-        //add by Jet, scroll left/right just like firemacs
-        'SHIFT-L': {'h': 'Scroll right 10%', 'f': function(e) { scroll(10, 1) } },
-        'SHIFT-H': {'h': 'Scroll left 10%', 'f': function(e) { scroll(-10, 1) } },
+        /* Scrolling in X */
+        // small scrolling
+        'N': {'h': 'Scroll down 10%', 'f': function(e) { scroll(10, 0) } },
+        'P': {'h': 'Scroll up 10%', 'f': function(e) { scroll(-10, 0) } },
+        /*'CTRL-M': {'f': function(e) { scroll(10, 0) } },
+        'CTRL-P': {'f': function(e) { scroll(-10, 0) } },*/
+        'J': {'h': 'Scroll down 10%', 'f': function(e) { scroll(10, 0) } },
+        'K': {'h': 'Scroll up 10%', 'f': function(e) { scroll(-10, 0) } },
+        //add by Jet , scroll up/down, just like firemacs
+        'CTRL-M': {'h': 'Scroll down 10%', 'f': function(e) { scroll(10, 0) } },
+        'CTRL-P': {'h': 'Scroll up 10%', 'f': function(e) { scroll(-10, 0) } },
         // medium scrolling
         'ALT-E': {'h': 'Scroll down 50%', 'f': function(e) { scroll(50, 0) } },
         'ALT-A': {'h': 'Scroll up 50%', 'f': function(e) { scroll(-50, 0) } },
         // page scrolling
-        'CTRL-V': {'h': 'Scroll down 90%', 'f': function(e) { scroll(90, 0, e) } },
+        'CTRL-V': {'h': 'Scroll down 90%', 'f': function(e) { scroll(90, 0) } },
         'ALT-V': {'h': 'Scroll up 90%', 'f': function(e) { scroll(-90, 0) } },
-        // page scrolling bindings in ediff mode
-        'V': {'f': function(e) { scroll(90, 0) } },
-        'SHIFT-V': {'f': function(e) { scroll(-90, 0) } },
-        // home and end on Meta-< and Meta->
+        //add by Jet, page scrolling bindings in ediff mode
+        'V': {'h': 'Scroll down 90%','f': function(e) { scroll(90, 0) } },
+        'SHIFT-V': {'h': 'Scroll up 90%','f': function(e) { scroll(-90, 0) } },
+        //add by Jet, home and end on Meta-< and Meta->
         'ALT-SHIFT-.': {'h': 'Scroll to end', 'f': function(e) { document.body.scrollTop = document.body.offsetHeight } },
         'ALT-SHIFT-,': {'h': 'Scroll to home', 'f': function(e) { document.body.scrollTop = 0 } },
         'SHIFT-.': {'h': 'Scroll to end', 'f': function(e) { document.body.scrollTop = document.body.offsetHeight } },
         'SHIFT-,': {'h': 'Scroll to home', 'f': function(e) { document.body.scrollTop = 0 } },
-        //'ALT->': {'f': function(e) { document.body.scrollTop = document.body.offsetHeight } },
-        //'SHIFT-ALT->': {'f': function(e) { document.body.scrollTop = 0 } },
         /* Scrolling in Y */
+        //add by Jet, scroll left/right just like firemacs
+        'SHIFT-L': {'h': 'Scroll right 10%', 'f': function(e) { scroll(10, 1) } },
+        'SHIFT-H': {'h': 'Scroll left 10%', 'f': function(e) { scroll(-10, 1) } },
+        //
         // small scrolling
         'F': {'h': 'Scroll right 10%', 'f': function(e) { scroll(10, 1) } },
-        //'CTRL-F': {'f': function(e) { scroll(10, 1) } },
-//      'CTRL-F': function(e) { scroll(10, 1) } },
         'B': {'h': 'Scroll left 10%', 'f': function(e) { scroll(-10, 1) } },
-        //'CTRL-B': {'f': function(e) { scroll(-10, 1) } },
         // large scrolling
         'ALT-F': {'h': 'Scroll right 50%', 'f': function(e) { scroll(50, 1) } },
         'ALT-B': {'h': 'Scroll left 50%', 'f': function(e) { scroll(-50, 1) } },
         // page scrolling
         'E': {'h': 'Scroll right 90%', 'f': function(e) { scroll(90, 1) } },
-        'CTRL-E': {'f': function(e) { scroll(90, 1) } },
         'A': {'h': 'Scroll left 90%', 'f': function(e) { scroll(-90, 1) } },
+        'CTRL-E': {'f': function(e) { scroll(90, 1) } },
         'CTRL-A': {'f': function(e) { scroll(-90, 1) } },
+        //add by Jet, history option.
+        'SHIFT-F': {'h': 'moves to the next page.', 'f': function(e) { historyMove(1); } },
+        'SHIFT-B': {'h': 'moves to the previous page.', 'f': function(e) { historyMove(-1); } },
+        //
         // help function
         'SHIFT-=': {'h': 'Show help', 'f': function(e) { showHelp() } },
-        'CTRL-H': {'M': {'h': 'Show help', 'f': function(e) { showHelp() } } },
+        'CTRL-H': {
+            'M': {'h': 'Show help', 'f': function(e) { showHelp() } }
+        },
         // eval javascript
         'ALT-SHIFT-1': {'h': 'Evaluate JavaScript', 'f': function(e) { evalJS(e) } },
         //move to next item in input area
@@ -882,4 +883,8 @@ var moveItem = function(e, offset){
             e.keyCode = 38// key Up
             break;
     }
+}
+
+var historyMove = function(d){
+    history.go(d);
 }
