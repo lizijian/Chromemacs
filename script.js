@@ -1,5 +1,7 @@
 /*
         Copyright (c) 2011 Theis Mackeprang (http://www.5p.dk/)
+        Copyright (c) 2011 FLorian Mounier (http://paradoxxxzero.tk/)
+        Copyright (c) 2011 Jet Lee
 
         Permission is hereby granted, free of charge, to any person obtaining a copy
         of this software and associated documentation files (the "Software"), to deal
@@ -325,6 +327,8 @@ var keydownevent = function(e) {
         else
             shortcut = editShortcuts;
 
+        //check return code to decide whether prevent default or not
+        //skip prevent default when rc = 1
         var rc = 0;
         inSeq.push(input);
         log(inSeq.join(" "));
