@@ -1,0 +1,37 @@
+/*
+                                    LICENCE
+	Copyright (c) 2011 Theis Mackeprang (http://www.5p.dk/)
+    Copyright (c) 2011 FLorian Mounier (http://paradoxxxzero.tk/)
+	Copyright (c) 2011 Jet Lee (ijetlee@gmail.com)
+
+	Permission is hereby granted, free of charge, to any person obtaining a copy
+	of this software and associated documentation files (the "Software"), to deal
+	in the Software without restriction, including without limitation the rights
+	to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+	copies of the Software, and to permit persons to whom the Software is
+	furnished to do so, subject to the following conditions:
+
+	The above copyright notice and this permission notice shall be included in
+	all copies or substantial portions of the Software.
+
+	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+	AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+	THE SOFTWARE.
+*/
+
+I'm not the original author, I just got the source code from github and made some
+essential change. Please refer to :
+    https://github.com/paradoxxxzero/chrome-emacs-mode
+    https://chrome.google.com/webstore/detail/miojjimhedbpnnjpneobbfhdicckhhkd?hl=en_US
+    https://github.com/5p/Emacs-mode
+
+And my purpose is that I need a Firemacs like bindings on chrome, because I am 
+accustomed to options of Firemacs.
+
+This is my 1st time to write a chrome extension, a web application, a java script.
+I don't familiar with JS/CSS/WEB before.So if you have some great ideas or suggests
+about this extension, please feel free to send me a email.
