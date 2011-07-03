@@ -58,14 +58,23 @@ var shortcuts = {
         /* Scrolling in X */
         // small scrolling
         'N': {'h': 'Scroll down 10%', 'f': function(e) { scroll(10, 0) } },
-        'CTRL-N': {'f': function(e) { scroll(10, 0) } },
+        'CTRL-M': {'f': function(e) { scroll(10, 0) } },
         'P': {'h': 'Scroll up 10%', 'f': function(e) { scroll(-10, 0) } },
         'CTRL-P': {'f': function(e) { scroll(-10, 0) } },
         'J': {'h': 'Scroll down 10%', 'f': function(e) { scroll(10, 0) } },
         'K': {'h': 'Scroll up 10%', 'f': function(e) { scroll(-10, 0) } },
-        //add by Jet , move to left/right tab
+        //add by Jet , scroll up/down, just like firemacs
+        'CTRL-P': {'h': 'Scroll up 10%', 'f': function(e) { scroll(-10, 0) } },
+        'CTRL-M': {'h': 'Scroll down 10%', 'f': function(e) { scroll(10, 0) } },
+        //add by Jet , move to left/right tab just like firemacs
+        'CTRL-F': {'h': 'Switch to left tab.', 'f': function(e) { chrome.extension.sendRequest({'action':'SWITCHTAB', 'offset': '-1'}); } },
+        'CTRL-B': {'h': 'Switch to right tab.', 'f': function(e) { chrome.extension.sendRequest({'action':'SWITCHTAB', 'offset': '1'}); } },
+        //add by Jet , move to left/right tab just like firemacs
         'H': {'h': 'Switch to left tab.', 'f': function(e) { chrome.extension.sendRequest({'action':'SWITCHTAB', 'offset': '-1'}); } },
         'L': {'h': 'Switch to right tab.', 'f': function(e) { chrome.extension.sendRequest({'action':'SWITCHTAB', 'offset': '1'}); } },
+        //add by Jet, scroll left/right just like firemacs
+        'SHIFT-L': {'h': 'Scroll right 10%', 'f': function(e) { scroll(10, 1) } },
+        'SHIFT-H': {'h': 'Scroll left 10%', 'f': function(e) { scroll(-10, 1) } },
         // medium scrolling
         'ALT-E': {'h': 'Scroll down 50%', 'f': function(e) { scroll(50, 0) } },
         'ALT-A': {'h': 'Scroll up 50%', 'f': function(e) { scroll(-50, 0) } },
@@ -78,15 +87,17 @@ var shortcuts = {
         // home and end on Meta-< and Meta->
         'ALT-SHIFT-.': {'h': 'Scroll to end', 'f': function(e) { document.body.scrollTop = document.body.offsetHeight } },
         'ALT-SHIFT-,': {'h': 'Scroll to home', 'f': function(e) { document.body.scrollTop = 0 } },
+        'SHIFT-.': {'h': 'Scroll to end', 'f': function(e) { document.body.scrollTop = document.body.offsetHeight } },
+        'SHIFT-,': {'h': 'Scroll to home', 'f': function(e) { document.body.scrollTop = 0 } },
         //'ALT->': {'f': function(e) { document.body.scrollTop = document.body.offsetHeight } },
         //'SHIFT-ALT->': {'f': function(e) { document.body.scrollTop = 0 } },
         /* Scrolling in Y */
         // small scrolling
         'F': {'h': 'Scroll right 10%', 'f': function(e) { scroll(10, 1) } },
-        'CTRL-F': {'f': function(e) { scroll(10, 1) } },
+        //'CTRL-F': {'f': function(e) { scroll(10, 1) } },
 //      'CTRL-F': function(e) { scroll(10, 1) } },
         'B': {'h': 'Scroll left 10%', 'f': function(e) { scroll(-10, 1) } },
-        'CTRL-B': {'f': function(e) { scroll(-10, 1) } },
+        //'CTRL-B': {'f': function(e) { scroll(-10, 1) } },
         // large scrolling
         'ALT-F': {'h': 'Scroll right 50%', 'f': function(e) { scroll(50, 1) } },
         'ALT-B': {'h': 'Scroll left 50%', 'f': function(e) { scroll(-50, 1) } },
@@ -99,7 +110,7 @@ var shortcuts = {
         'SHIFT-=': {'h': 'Show help', 'f': function(e) { showHelp() } },
         'CTRL-H': {'M': {'h': 'Show help', 'f': function(e) { showHelp() } } },
         // eval javascript
-        'SHIFT-ALT-1': {'h': 'Evaluate JavaScript', 'f': function(e) { evalJS(e) } },
+        'ALT-SHIFT-1': {'h': 'Evaluate JavaScript', 'f': function(e) { evalJS(e) } },
         //move to next item in input area
         'CTRL-M(INPUT)': {'f': function(e) { moveItem(e, 1) } },
         'CTRL-P(INPUT)': {'f': function(e) { moveItem(e, -1) } },
