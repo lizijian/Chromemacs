@@ -115,15 +115,18 @@ var shortcuts = {
         // eval javascript
         'ALT-SHIFT-1': {'h': 'Evaluate JavaScript', 'f': function(e) { evalJS(e) } },
         //move to next item in input area
-        'CTRL-M(INPUT)': {'f': function(e) { moveItem(e, 1) } },
-        'CTRL-P(INPUT)': {'f': function(e) { moveItem(e, -1) } },
+        /*'CTRL-M(INPUT)': {'f': function(e) { moveItem(e, 1) } },
+        'CTRL-P(INPUT)': {'f': function(e) { moveItem(e, -1) } },*/
+        //copy/paste trail code
+        'ALT-W': {'f': function(e) { cmdCopy(e, editing = 0) } },
+        //
         // link to the god damn GPL
         'CTRL-6': {'h': 'Show license for EMACS icon', 'f': function(e) { log("The EMACS icon is distributed under the <a href='http://www.gnu.org/licenses/gpl-3.0.html'>GPv3 license</a>.") } }
 };
 
 var editShortcuts = {
         'CTRL-Y(EDIT)': {'f': function(e) { cmdPaste(e) } },
-        'ALT-W(EDIT)': {'f': function(e) { cmdCopy(e) } },
+        'ALT-W(EDIT)': {'f': function(e) { cmdCopy(e, editing = 1) } },
         'CTRL-D(EDIT)': {'f': function(e) { cmdCut(e) } },
         'CTRL-A(EDIT)': {'f': function(e) { editMove(e, '-n') } },
         'CTRL-E(EDIT)': {'f': function(e) { editMove(e, 'n') } },
@@ -672,7 +675,7 @@ var evalJS = function(e) {
         }
 }
 
-var cmdCopy = function(e) {
+var cmdCopy = function(e, editing) {
     var s = window.getSelection();
     var text = s.toString();
     if (text.length >0){
@@ -739,7 +742,14 @@ var findLineOffset = function(tb){
 var saveOffset = 0;
 var editMove = function(e, offset) {
     var tBox = document.getElementById(e.target.id);
-    /*if (!tBox) return (-1);*/
+    if (!tBox){
+        tBox = document.getElementsByName(e.target.name);
+        for (var i = 0; i < tBox.length; ++i)
+            if (tBox[i] == document.activeElement)
+                break;
+        tBox = tBox[i];
+    }
+
     var start = tBox.selectionStart;
     var end = tBox.selectionEnd;
     switch (offset) {
