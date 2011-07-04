@@ -619,6 +619,10 @@ var showHelp = function() {
                         if (readQuit instanceof Function) readQuit();
                         return;
                 }
+                //if frame is too small to display help message, return
+                if (document.body.offsetHeight < 200 || document.body.offsetWidth < 200)
+                    return;
+
                 if (readQuit instanceof Function) readQuit(); // quit other process?
                 resetConsole();
                 helpOn = true;
