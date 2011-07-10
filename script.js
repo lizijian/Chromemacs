@@ -679,6 +679,16 @@ var evalJS = function(e) {
         }
 }
 
+var getElement = function(e) {
+    var element = document.getElementById(e.target.id);
+    if (!element){
+        element = document.getElementsByName(e.target.name);
+        for (var i = 0; i < element.length; ++i)
+            if (element[i] == document.activeElement)
+                return element[i];
+    }
+}
+
 var cmdCopy = function(e, editing) {
     var s = window.getSelection();
     var text = s.toString();
@@ -720,10 +730,10 @@ var cmdPaste = function(e) {
 
 var cmdCut = function(e) {
     cmdCopy(e);
-    var tBox = document.getElementById(e.target.id);
+    var tBox = getElement(e);
     var text = tBox.value.substring(0, tBox.selectionStart);
     var pos = text.length;
-    text += tBox.value.substring(tBox.selectionEnd, tBox.value.length);
+    text += tBox.value.substring(tBox.selectionEnd>tBox.selectionStart?tBox.selectionEnd:tBox.selectionEnd + 1, tBox.value.length);
     tBox.value = text;
     tBox.selectionStart = pos;
     tBox.selectionEnd = pos;
@@ -745,14 +755,7 @@ var findLineOffset = function(tb){
 
 var saveOffset = 0;
 var editMove = function(e, offset) {
-    var tBox = document.getElementById(e.target.id);
-    if (!tBox){
-        tBox = document.getElementsByName(e.target.name);
-        for (var i = 0; i < tBox.length; ++i)
-            if (tBox[i] == document.activeElement)
-                break;
-        tBox = tBox[i];
-    }
+    var tBox = getElement(e);
 
     var start = tBox.selectionStart;
     var end = tBox.selectionEnd;
@@ -822,6 +825,8 @@ var editMove = function(e, offset) {
                 saveOffset = off.charoffset;
             break;
         case "d":
+            if (e.target.tagName == "INPUT")
+                return moveItem(e, 1);
             var off = findLineOffset(tBox)
             var lineOffset = off.charoffset;
             if (saveOffset > lineOffset)
@@ -863,12 +868,13 @@ var editMove = function(e, offset) {
     }
 }
 
-var cleanSaveOffset = function(offset){
-
+var historyMove = function(d){
+    history.go(d);
 }
 
+//unfinished function, just a todo frame
 var moveItem = function(e, offset){
-    var inBox = document.getElementById(e.target.id);
+    var inBox = getElement(e);
     switch(offset){
         case 1:
             /*var evt = document.createEvent("MouseEvents");  */
@@ -884,14 +890,13 @@ var moveItem = function(e, offset){
                                  true,             //  in boolean cancelableArg,                                                       
                                  null,             //  in nsIDOMAbstractView viewArg,  Specifies UIEvent.view. This value may be null.     
                                  "Down",
-                                 40,
                                  false,            //  in boolean ctrlKeyArg,                                                               
                                  false,            //  in boolean altKeyArg,                                                        
                                  false,            //  in boolean shiftKeyArg,                                                      
                                  false,            //  in boolean metaKeyArg,                                                       
-                                 false);
-                                 /*40,              //  in unsigned long keyCodeArg,                                                      
-                                 0);              //  in unsigned long charCodeArg); */
+                                 false,
+                                 40,              //  in unsigned long keyCodeArg,                                                      
+                                 40);              // in unsigned long charCodeArg); */
             
             ev.keyCode = 40;
 			inBox.dispatchEvent(ev);
@@ -901,8 +906,4 @@ var moveItem = function(e, offset){
             e.keyCode = 38// key Up
             break;
     }
-}
-
-var historyMove = function(d){
-    history.go(d);
 }
