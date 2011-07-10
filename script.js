@@ -101,8 +101,8 @@ var shortcuts = {
         // page scrolling
         'E': {'h': 'Scroll right 90%', 'f': function(e) { scroll(90, 1) } },
         'A': {'h': 'Scroll left 90%', 'f': function(e) { scroll(-90, 1) } },
-        'CTRL-E': {'f': function(e) { scroll(90, 1) } },
-        'CTRL-A': {'f': function(e) { scroll(-90, 1) } },
+        'CTRL-E': {'h': 'Scroll right 90%', 'f': function(e) { scroll(90, 1) } },
+        'CTRL-A': {'h': 'Scroll left 90%','f': function(e) { scroll(-90, 1) } },
         //add by Jet, history option.
         'SHIFT-F': {'h': 'moves to the next page.', 'f': function(e) { historyMove(1); } },
         'SHIFT-B': {'h': 'moves to the previous page.', 'f': function(e) { historyMove(-1); } },
@@ -118,7 +118,7 @@ var shortcuts = {
         /*'CTRL-M(INPUT)': {'f': function(e) { moveItem(e, 1) } },
         'CTRL-P(INPUT)': {'f': function(e) { moveItem(e, -1) } },*/
         //copy/paste trail code
-        'ALT-W': {'f': function(e) { cmdCopy(e, editing = 0) } },
+        'ALT-W': {'h': 'Copy selection.', 'f': function(e) { cmdCopy(e, editing = 0) } },
         //
         // link to the god damn GPL
         'CTRL-6': {'h': 'Show license for EMACS icon', 'f': function(e) { log("The EMACS icon is distributed under the <a href='http://www.gnu.org/licenses/gpl-3.0.html'>GPv3 license</a>.") } }
@@ -127,13 +127,13 @@ var shortcuts = {
 var editShortcuts = {
         'CTRL-Y(EDIT)': {'f': function(e) { cmdPaste(e) } },
         'ALT-W(EDIT)': {'f': function(e) { cmdCopy(e, editing = 1) } },
-        'CTRL-D(EDIT)': {'f': function(e) { cmdCut(e) } },
-        'CTRL-A(EDIT)': {'f': function(e) { editMove(e, '-n') } },
-        'CTRL-E(EDIT)': {'f': function(e) { editMove(e, 'n') } },
-        'CTRL-F(EDIT)': {'f': function(e) { editMove(e, '1') } },
-        'CTRL-B(EDIT)': {'f': function(e) { editMove(e, '-1') } },
-        'CTRL-M(EDIT)': {'f': function(e) { editMove(e, 'd') } },
-        'CTRL-P(EDIT)': {'f': function(e) { editMove(e, 'u') } },
+        'CTRL-D(EDIT)': {'h': 'Delete selection or next character.', 'f': function(e) { cmdCut(e) } },
+        'CTRL-A(EDIT)': {'h': 'Move to the beginning of line.', 'f': function(e) { editMove(e, '-n') } },
+        'CTRL-E(EDIT)': {'h': 'Move to the end of line.', 'f': function(e) { editMove(e, 'n') } },
+        'CTRL-F(EDIT)': {'h': 'Move forward.', 'f': function(e) { editMove(e, '1') } },
+        'CTRL-B(EDIT)': {'h': 'Move backward.', 'f': function(e) { editMove(e, '-1') } },
+        'CTRL-M(EDIT)': {'h': 'Move to next line.(because CTRL-M cannot be overloading)', 'f': function(e) { editMove(e, 'd') } },
+        'CTRL-P(EDIT)': {'h': 'Move to previous line.', 'f': function(e) { editMove(e, 'u') } },
 };
 
 var inSeq = [];
@@ -631,7 +631,7 @@ var showHelp = function() {
                 helpdiv.innerHTML = "<h1>Emacs-mode for Google Chrome</h1>";
                 var tablediv = document.createElement('DIV');
                 tablediv.className = 'tableholder';
-                tablediv.innerHTML = "<table cellspacing='5' align='center'><tr><td valign='top' nowrap='nowrap'>"+readHelp(shortcuts, "").replace(/\t/g, "</td><td valign='top'>: ").replace(/\n/g, "</td></tr><tr><td valign='top' nowrap='nowrap'>")+"</td></tr></table>";
+                tablediv.innerHTML = "<table cellspacing='5' align='center'><tr><td valign='top' nowrap='nowrap'>"+(readHelp(shortcuts, "") + readHelp(editShortcuts, "")).replace(/\t/g, "</td><td valign='top'>: ").replace(/\n/g, "</td></tr><tr><td valign='top' nowrap='nowrap'>")+"</td></tr></table>";
                 helpdiv.appendChild(tablediv);
                 document.body.appendChild(helpdiv);
                 readQuit = function() {
