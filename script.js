@@ -687,6 +687,7 @@ var getElement = function(e) {
             if (element[i] == document.activeElement)
                 return element[i];
     }
+    return element;
 }
 
 var cmdCopy = function(e, editing) {
