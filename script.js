@@ -46,13 +46,15 @@ var shortcuts = {
         'CTRL-ALT-R': {'h': 'Reverse regexp I-search links', 'f': function(e) { searchLinks(e, 1) } },
         'CTRL-J': {'h': 'Jump to link or form control', 'f': function(e) { jumpTo(e) } },
         // native functions
+        'BACKSPACE': {'h': 'Previous page in history', 'f': function(e) { log("Hmm.. How did you get here?") } },
+        //'CTRL-T': {'h': 'New tab', 'f': function(e) { chrome.extension.sendMessage({'action':'NEW_TAB'}) } },
         'ESC': {'h': 'Remove focus from link or form control', 'f': function(e) { log("Hmm.. How did you get here?") } },
         'CTRL-X': {
-                'CTRL-C': {'h': 'Close all windows', 'f': function(e) { chrome.extension.sendRequest({'action':'CLOSE_ALL_WINDOWS'}) } },
-                'K': { 'h': 'Close current tab', 'f': function(e) { chrome.extension.sendRequest({'action':'CLOSE_TAB'}) } },
+                'CTRL-C': {'h': 'Close all windows', 'f': function(e) { chrome.extension.sendMessage({'action':'CLOSE_ALL_WINDOWS'}) } },
+                'K': { 'h': 'Close current tab', 'f': function(e) { chrome.extension.sendMessage({'action':'CLOSE_TAB'}) } },
                 '5': {
-                        '0': { 'h': 'Close current window', 'f': function(e) { chrome.extension.sendRequest({'action':'CLOSE_WINDOW'}, function(r){}) } },
-                        '2': {'h': 'New window', 'f': function(e) { chrome.extension.sendRequest({'action':'NEW_WINDOW'}, function(r){}) } }
+                        '0': { 'h': 'Close current window', 'f': function(e) { chrome.extension.sendMessage({'action':'CLOSE_WINDOW'}, function(r){}) } },
+                        '2': {'h': 'New window', 'f': function(e) { chrome.extension.sendMessage({'action':'NEW_WINDOW'}, function(r){}) } }
                 }
         },
         /*switch tab to left/right*/
@@ -118,12 +120,13 @@ var shortcuts = {
         /*'CTRL-M(INPUT)': {'f': function(e) { moveItem(e, 1) } },
         'CTRL-P(INPUT)': {'f': function(e) { moveItem(e, -1) } },*/
         //copy/paste trail code
-        'ALT-W': {'h': 'Copy selection.', 'f': function(e) { cmdCopy(e, editing = 0) } },
+        //'ALT-W': {'h': 'Copy selection.', 'f': function(e) { cmdCopy(e, editing = 0) } },
         //
         // link to the god damn GPL
         'CTRL-6': {'h': 'Show license for EMACS icon', 'f': function(e) { log("The EMACS icon is distributed under the <a href='http://www.gnu.org/licenses/gpl-3.0.html'>GPv3 license</a>.") } }
 };
 
+//copy paste does not work on version 2, annoying permissions
 var editShortcuts = {
         'CTRL-Y(EDIT)': {'f': function(e) { cmdPaste(e) } },
         'ALT-W(EDIT)': {'f': function(e) { cmdCopy(e, editing = 1) } },
@@ -294,11 +297,11 @@ var keydownevent = function(e) {
                 if (input == 'CTRL-Q') {
                         enabled = !enabled;
                         if (enabled) {
-                                chrome.extension.sendRequest({'action':'ENABLE'});
+                                chrome.extension.sendMessage({'action':'ENABLE'});
                                 log("Emacs-mode enabled!");
                         } else {
                                 if (e.preventDefault) e.preventDefault();
-                                chrome.extension.sendRequest({'action':'DISABLE'});
+                                chrome.extension.sendMessage({'action':'DISABLE'});
                                 if (readQuit instanceof Function) readQuit();
                                 resetConsole();
                         }
@@ -355,7 +358,7 @@ window.addEventListener('keydown', keydownevent, true);
 /*document.addEventListener("keydown", keydownevent, false);*/
 
 
-chrome.extension.onRequest.addListener(function(req, sender, r) {
+chrome.runtime.onMessage.addListener(function(req, sender, r) {
         switch (req.action) {
         case "keydown":
                 keydownevent(req.event);
@@ -694,7 +697,7 @@ var cmdCopy = function(e, editing) {
     var s = window.getSelection();
     var text = s.toString();
     if (text.length >0){
-        chrome.extension.sendRequest(
+        chrome.extension.sendMessage(
             {
                 'action': "COPY",
                 'type': "reformat",
@@ -708,7 +711,7 @@ var cmdPaste = function(e) {
     /*var tBox = document.getElementById(e.target.name);
     console.log("paste event log: " + e);*/
     /*document.execCommand('paste', false, null);*/
-    chrome.extension.sendRequest(
+    chrome.extension.sendMessage(
         {
             'action': "PASTE",
             'textObjId': e.target.id,
@@ -751,7 +754,7 @@ var findLineOffset = function(tb){
             else
                 res += 2;
     }
-    return {charoffset: 0, indexoffset: 0};
+    return {charoffset: tb.selectionStart, indexoffset: 0};
 }
 
 var saveOffset = 0;
