@@ -59,11 +59,11 @@ var shortcuts = {
         },
         /*switch tab to left/right*/
         //add by Jet , move to left/right tab just like firemacs
-        'CTRL-B': {'h': 'Switch to left tab.', 'f': function(e) { chrome.extension.sendRequest({'action':'SWITCHTAB', 'offset': '-1'}); } },
-        'CTRL-F': {'h': 'Switch to right tab.', 'f': function(e) { chrome.extension.sendRequest({'action':'SWITCHTAB', 'offset': '1'}); } },
+        'CTRL-B': {'h': 'Switch to left tab.', 'f': function(e) { chrome.extension.sendMessage({'action':'SWITCHTAB', 'offset': '-1'}); } },
+        'CTRL-F': {'h': 'Switch to right tab.', 'f': function(e) { chrome.extension.sendMessage({'action':'SWITCHTAB', 'offset': '1'}); } },
         //add by Jet , move to left/right tab just like firemacs
-        'H': {'h': 'Switch to left tab.', 'f': function(e) { chrome.extension.sendRequest({'action':'SWITCHTAB', 'offset': '-1'}); } },
-        'L': {'h': 'Switch to right tab.', 'f': function(e) { chrome.extension.sendRequest({'action':'SWITCHTAB', 'offset': '1'}); } },
+        'H': {'h': 'Switch to left tab.', 'f': function(e) { chrome.extension.sendMessage({'action':'SWITCHTAB', 'offset': '-1'}); } },
+        'L': {'h': 'Switch to right tab.', 'f': function(e) { chrome.extension.sendMessage({'action':'SWITCHTAB', 'offset': '1'}); } },
         /* Scrolling in X */
         // small scrolling
         'N': {'h': 'Scroll down 10%', 'f': function(e) { scroll(10, 0) } },
